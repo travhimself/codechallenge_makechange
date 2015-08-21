@@ -38,7 +38,6 @@ angular.module('makechange', [])
         mcc.convert = function() {
             var value = mcc.inputvalue;
 
-            if ( validateinput(value) ) {
                 // clear any existing results and errors
                 mcc.units = [];
                 $scope.errormessage = '';
@@ -61,23 +60,6 @@ angular.module('makechange', [])
                     // reduce input value by the value of the units broken off
                     inputvaluecents = inputvaluecents - ( unitvaluecents * divisiblecount );
                 });
-            };
-        };
-
-        validateinput = function(input) {
-            // regular expression to test against
-            // borrowed and adapted from: http://stackoverflow.com/a/11780743
-            var regex = /^[1-9]\d*((\.\d{0,2})?)$/;
-
-            // test validity
-            if ( regex.test(input) ) {
-                return true;
-            } else {
-                // throw an error
-                mcc.units = [];
-                $scope.errormessage = 'You must input a $USD value greater than 0, with no more than two decimal places. For example: $1.25, $19.95, $100.01';
-                return false;
-            };
         };
 
         // reset the output

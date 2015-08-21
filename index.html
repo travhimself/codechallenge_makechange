@@ -40,16 +40,19 @@
         <div class="row" ng-controller="makechangecontroller as mcc">
 
             <div id="input" class="three columns">
-                <input type="number" min="0" ng-keypress="mcc.detectkey($event)" ng-model="mcc.inputvalue" placeholder="Enter a value">
-                <button type="submit" class="button-primary" ng-click="mcc.convert()">Make Change</button>
-                <button type="submit" class="button-secondary" ng-click="mcc.reset()">Reset</button>
+                <form name="changeform" novalidate>
+                    <!-- regex borrowed and adapted from: http://stackoverflow.com/a/11780743 -->
+                    <input type="number" name="inputvalue" min="0" step=".01" maxlength="9" ng-keypress="mcc.detectkey($event)" ng-model="mcc.inputvalue" ng-pattern="/^[0-9]\d*((\.\d{0,2})?)$/" ng-maxlength="15" placeholder="Enter a value">
+                    <div class="error" ng-show="changeform.inputvalue.$error.maxlength">You must a value that is no longer than 15 places, including the decimal.</div>
+                    <div class="error" ng-show="changeform.inputvalue.$error.pattern">You must enter a positive $USD value, with no more than two decimal places. For example: $1.25, $19.95, $100.01</div>
+                    <button type="submit" class="button-primary" ng-click="mcc.convert()">Make Change</button>
+                    <button type="submit" class="button-secondary" ng-click="mcc.reset()">Reset</button>
+                </form>
             </div>
 
             <div class="one column">&nbsp;</div>
 
             <div id="output" class="eight columns">
-                <div class="error">{{ errormessage }}</div>
-
                 <div>
                     <div class="denomination" ng-repeat="unit in mcc.units">
                         <div class="facevalue {{ unit.type }} {{ unit.color }}">{{ unit.facevalue }}</div>
