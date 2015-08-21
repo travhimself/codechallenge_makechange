@@ -75,7 +75,7 @@ angular.module('makechange', [])
             } else {
                 // throw an error
                 mcc.units = [];
-                $scope.errormessage = 'You must input a $USD value greater than 0. (eg. $1.25, $19.95, $100.01)';
+                $scope.errormessage = 'You must input a $USD value greater than 0, with no more than two decimal places. For example: $1.25, $19.95, $100.01';
                 return false;
             };
         };
